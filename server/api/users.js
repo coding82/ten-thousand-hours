@@ -1,13 +1,12 @@
 const router = require('express').Router()
 const {User, Plan} = require('../db/models')
-const Sequelize = require('sequelize')
 module.exports = router
 
 
 // GET - all users
 
 router.get('/', (req, res, next) => {
-  return User.findAll()
+  return User.findAll({ attributes: ['id', 'email', 'firstName', 'lastName']})
     .then( users => res.json(users).status(200))
     .catch(next)
 })

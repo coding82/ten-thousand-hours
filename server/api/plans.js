@@ -1,6 +1,5 @@
 const router = require('express').Router()
-const {Plan} = require('../db/models')
-const Sequelize = require('sequelize')
+const {Plan, User} = require('../db/models')
 module.exports = router
 
 
@@ -15,7 +14,7 @@ router.get('/', (req, res, next) => {
 // GET - single Plan
 
 router.get('/:id', (req, res, next) => {
-  return Plan.findById(req.params.id)
+  return Plan.findOne({where: {id: req.params.id}, include: [{model: User}]})
     .then( plan => res.json(plan).status(200))
     .catch(next)
 })
